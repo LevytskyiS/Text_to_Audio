@@ -10,7 +10,7 @@ def text_to_speech(text="Hi"):
     headers = {"Authorization": f"Bearer {settings.API_KEY}"}
     url = "https://api.edenai.run/v2/audio/text_to_speech"
     payload = {
-        "providers": "lovoai",
+        "providers": "google",
         "language": "en-US",
         "option": "FEMALE",
         "text": text,
@@ -23,7 +23,7 @@ def text_to_speech(text="Hi"):
     with open(f"{unx_time}_chlor.json", "w", encoding="utf-8") as file:
         json.dump(result, file, indent=4, ensure_ascii=False)
 
-    audio_url = result.get("lovoai").get("audio_resource_url")
+    audio_url = result.get("google").get("audio_resource_url")
     r = requests.get(audio_url)
 
     with open(f"{unx_time}.wav", "wb") as file:
