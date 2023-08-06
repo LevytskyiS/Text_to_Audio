@@ -2,20 +2,30 @@ import json
 import time
 
 import requests
+import pandas as pd
 
 from conf.config import settings
+
+
+def read_user_csv():
+    data = pd.read_excel("Q&A.xlsx")
+    answers = data["Answer"]
+    return answers
 
 
 def text_to_speech(text="Hi"):
     headers = {"Authorization": f"Bearer {settings.API_KEY}"}
     url = "https://api.edenai.run/v2/audio/text_to_speech"
+
+    # answers = read_user_csv()
+
+    # for answer in answers:
     payload = {
         "providers": "google",
         "language": "en-US",
         "option": "FEMALE",
         "text": text,
     }
-
     response = requests.post(url, json=payload, headers=headers)
     result = json.loads(response.text)
     unx_time = time.time()
